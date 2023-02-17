@@ -9,16 +9,14 @@ services:
     container_name: mongodb
   
   frontend:
-    build: 
-      context: ./frontend
+    image: wprapp2.azurecr.io/frontend:latest
     command: yarn build
     volumes:
       - front:/app/dist
     container_name: frontend
 
   server:
-    build: 
-      context: ./server
+    image: wprapp2.azurecr.io/server:latest
     env_file:
       - .env
     volumes:
