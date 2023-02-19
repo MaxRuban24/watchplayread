@@ -18,6 +18,12 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps:
+    - task: DockerInstaller@0
+      displayName: Docker Installer
+      inputs:
+        dockerVersion: 23.0.1
+        releaseType: stable
+
     - task: Docker@2
       displayName: Build an image
       inputs:
