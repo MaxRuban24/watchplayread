@@ -2,14 +2,18 @@ version: "3.3"
 
 services: 
   frontend:
-    image: wpracr.azurecr.io/frontend:latest
+    image: wpracr1.azurecr.io/frontend:prod
+    build: 
+      context: ./frontend
     command: yarn build
     volumes:
       - front:/app/dist
     container_name: frontend
 
   server:
-    image: wpracr.azurecr.io/server:latest
+    image: wpracr1.azurecr.io/server:prod
+    build: 
+      context: ./server
     env_file:
       - .env
     volumes:
@@ -20,7 +24,7 @@ services:
 
 volumes:
   front:
-    driver: azure_file
-    driver_opts:
-      share_name: wprfile
-      storage_account_name: wprshare
+    # driver: azure_file
+    # driver_opts:
+    #   share_name: wprfile
+    #   storage_account_name: wprshare
