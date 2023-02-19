@@ -7,7 +7,6 @@ resources:
 - repo: self
 
 variables:
-  tag: '$(Build.BuildId)'
   azureContainerRegistry: wpracr1.azurecr.io
   azureSubscription: wprservicecon
 
