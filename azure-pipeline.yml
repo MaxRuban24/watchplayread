@@ -9,10 +9,11 @@ resources:
 variables:
   azureContainerRegistry: wpracr1.azurecr.io
   azureSubscription: wprservicecon
+  appName: wpr-app
 
 stages:
 - stage: Build
-  displayName: Build image
+  displayName: Build and push docker images
   jobs:
   - job: Build
     displayName: Build
@@ -45,3 +46,33 @@ stages:
         dockerComposeFile: docker-compose.yml
         projectName: $(Build.Repository.Name)
         qualifyImageNames: true
+    
+    - task: PublishBuildArtifacts@1
+      displayName: "Publish artifact"
+      inputs:
+        pathToPublish: '$(Build.SourcesDirectory)/docker-compose.yml'
+        artifactName: 'yml'
+
+- stage: Deploy
+  displayName: Deploy to Azure web app
+  jobs:
+  - job: Deploy
+    displayName: Deploy
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: DownloadBuildArtifacts@1
+      displayName: "Download artifact for deploy"
+      inputs:
+        buildType: 'current'
+        downloadType: 'single'
+        artifactName: 'yml'
+        downloadPath: '$(Pipeline.WorkSpace)/deploy'
+    
+    - task: AzureWebAppContainer@1
+      displayName: "Deploy updated docker compose file to Web App"
+      inputs:
+        azureSubscription: $(azureSubscription)
+        appName: $(appName)
+        multicontainerConfigFile: '$(Pipeline.WorkSpace)/deploy/docker-compose.yml'
+        
