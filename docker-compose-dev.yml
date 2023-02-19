@@ -9,14 +9,14 @@ services:
     container_name: mongodb
   
   frontend:
-    image: wprapp2.azurecr.io/frontend:latest
+    image: wpracr.azurecr.io/frontend:latest
     command: yarn build
     volumes:
       - front:/app/dist
     container_name: frontend
 
   server:
-    image: wprapp2.azurecr.io/server:latest
+    image: wpracr.azurecr.io/server:latest
     env_file:
       - .env
     volumes:
@@ -24,8 +24,12 @@ services:
     depends_on:
       - mongo
     ports:
-      - 3000:3000
+      - 80:80
     container_name: server
 
 volumes:
   front:
+    driver: azure_file
+    driver_opts:
+      share_name: wprfile
+      storage_account_name: wprshare
