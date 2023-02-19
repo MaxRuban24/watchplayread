@@ -67,12 +67,12 @@ stages:
         buildType: 'current'
         downloadType: 'single'
         artifactName: 'yml'
-        downloadPath: '$(Pipeline.WorkSpace)/deploy'
+        downloadPath: '$(Pipeline.WorkSpace)'
     
     - task: AzureWebAppContainer@1
       displayName: "Deploy updated docker compose file to Web App"
       inputs:
         azureSubscription: $(azureSubscription)
         appName: $(appName)
-        multicontainerConfigFile: '$(Pipeline.WorkSpace)/deploy/docker-compose.yml'
+        multicontainerConfigFile: '$(Pipeline.WorkSpace)/yml/docker-compose.yml'
         
