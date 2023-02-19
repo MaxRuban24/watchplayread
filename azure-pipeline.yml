@@ -1,13 +1,15 @@
 # Build and deploy container images to Azure Web App
 
 trigger:
-- master
+- none
 
 resources:
 - repo: self
 
 variables:
   tag: '$(Build.BuildId)'
+  azureContainerRegistry: wpracr1.azurecr.io
+  azureSubscription: wprservicecon
 
 stages:
 - stage: Build
@@ -17,6 +19,7 @@ stages:
     displayName: Build
     pool:
       vmImage: ubuntu-latest
+
     steps:
     - task: DockerInstaller@0
       displayName: Docker Installer
@@ -24,10 +27,22 @@ stages:
         dockerVersion: 23.0.1
         releaseType: stable
 
-    - task: Docker@2
-      displayName: Build an image
+    - task: DockerCompose@0
+      displayName: Build services
       inputs:
-        command: build
-        dockerfile: '$(Build.SourcesDirectory)/frontend/Dockerfile'
-        tags: |
-          $(tag)
+        action: Build services
+        azureSubscriptionEndpoint: $(azureSubscription)
+        azureContainerRegistry: $(azureContainerRegistry)
+        dockerComposeFile: docker-compose.yml
+        projectName: $(Build.Repository.Name)
+        qualifyImageNames: true
+    
+    - task: DockerCompose@0
+      displayName: Push services
+      inputs:
+        action: Push services
+        azureSubscriptionEndpoint: $(azureSubscription)
+        azureContainerRegistry: $(azureContainerRegistry)
+        dockerComposeFile: docker-compose.yml
+        projectName: $(Build.Repository.Name)
+        qualifyImageNames: true

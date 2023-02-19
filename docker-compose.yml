@@ -14,8 +14,8 @@ services:
     image: wpracr1.azurecr.io/server:prod
     build: 
       context: ./server
-    env_file:
-      - .env
+    # env_file:
+    #   - .env
     volumes:
       - front:/app/public
     ports:
