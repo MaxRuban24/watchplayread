@@ -1,7 +1,7 @@
 # Build and deploy container images to Azure Web App
 
 trigger:
-- none
+- master
 
 resources:
 - repo: self
