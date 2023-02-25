@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
 const app = express();
-const port = process.env.PORT || 80;
+const port = process.env.PORT || 3000;
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -62,6 +62,15 @@ app.get('/api/notes', (req, res) => {
     return res.json(notes);
   });
 });
+
+app.delete('/api/notes/:id', (req, res) => {
+  Note.deleteOne({ _id: req.params.id }, (err, note) => {
+    if (err) {
+      return res.status(500).send(err);
+    }
+    return res.json(note);
+  })
+})
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

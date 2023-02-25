@@ -14,7 +14,7 @@
     hasAuthor?: boolean
   }>()
 
-  const emit = defineEmits(['update', 'create'])
+  const emit = defineEmits(['update', 'create', 'delete'])
 
   const picking = ref<boolean>(false)
   const name = ref<string>('')
@@ -48,6 +48,9 @@
             </td>
             <td class="font-weight-medium">{{ item.name }}</td>
             <td v-if="hasAuthor">{{ item.author }}</td>
+            <td>
+              <v-btn variant="plain" size="small" icon="mdi-close" @click="emit('delete', item)" />
+            </td>
           </tr>
         </tbody>
       </v-table>
