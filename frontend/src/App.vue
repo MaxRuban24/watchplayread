@@ -10,6 +10,7 @@
               has-author 
               @create="item => create(item, 'books')" 
               @update="item => update(item, 'books')" 
+              @delete="item => del(item, 'books')"
             />
           </v-col>
           <v-col :cols="3">
@@ -18,7 +19,8 @@
               :items="categories.movies" 
               has-author 
               @create="item => create(item, 'movies')" 
-              @update="item => update(item, 'movies')" 
+              @update="item => update(item, 'movies')"
+              @delete="item => del(item, 'movies')"
             />
           </v-col>
           <v-col :cols="3">
@@ -26,16 +28,9 @@
               title="Games" 
               :items="categories.games" 
               @create="item => create(item, 'games')" 
-              @update="item => update(item, 'games')" 
+              @update="item => update(item, 'games')"
+              @delete="item => del(item, 'games')"
             />
-          </v-col>
-          <v-col :cols="3">
-            <List 
-              title="Music" 
-              :items="categories.music" 
-              has-author 
-              @create="item => create(item, 'music')" 
-              @update="item => update(item, 'music')" />
           </v-col>
         </v-row>
       </v-container>
@@ -52,8 +47,7 @@ import { onMounted, reactive } from 'vue';
   const categories: Categories = reactive({
     books: [],
     movies: [],
-    games: [],
-    music: []
+    games: []
   })
 
   onMounted(() => {
@@ -85,6 +79,13 @@ import { onMounted, reactive } from 'vue';
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(Object.assign(item, { category }))
+  })
+
+  const del = (item: Item, category: string) => fetch(`/api/notes/${item._id}`, {
+    method: 'DELETE'
+  })
+  .then(data => {
+    categories[category] = categories[category].filter(x => x._id != item._id)
   })
 
 </script>
