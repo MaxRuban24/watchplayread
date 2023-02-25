@@ -32,16 +32,6 @@
               @delete="item => del(item, 'games')"
             />
           </v-col>
-          <v-col :cols="3">
-            <List 
-              title="Music" 
-              :items="categories.music" 
-              has-author 
-              @create="item => create(item, 'music')" 
-              @update="item => update(item, 'music')"
-              @delete="item => del(item, 'music')"
-            />
-          </v-col>
         </v-row>
       </v-container>
     </v-main>
@@ -57,8 +47,7 @@ import { onMounted, reactive } from 'vue';
   const categories: Categories = reactive({
     books: [],
     movies: [],
-    games: [],
-    music: []
+    games: []
   })
 
   onMounted(() => {
