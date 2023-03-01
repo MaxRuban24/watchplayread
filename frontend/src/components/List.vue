@@ -8,7 +8,8 @@
     completed: boolean
   }
  
-  const { items, title, hasAuthor } = defineProps<{
+  const { items, title, hasAuthor, color } = defineProps<{
+    color: string
     title: string
     items: Item[]
     hasAuthor?: boolean
@@ -30,7 +31,7 @@
 </script>
 
 <template>
-  <v-card border="1" class="pa-0" density="compact">
+  <v-card :border="1" class="pa-0" :class="`bg-${color}`" density="compact">
     <v-card-title>
       {{ title }}
     </v-card-title>
@@ -79,10 +80,10 @@
           <v-btn variant="plain" size="small" icon="mdi-close" @click="picking = false">
           </v-btn>
         </v-row>
-        <v-btn v-if="!picking" block class="py-2" @click="picking = true">
+        <v-btn v-if="!picking" block class="py-2" :class="`bg-${color}`" @click="picking = true">
           <v-icon icon="mdi-plus"></v-icon>
         </v-btn>
-        <v-btn v-else block type="submit" class="py-2">
+        <v-btn v-else block type="submit" class="py-2" :class="`bg-${color}`" >
           <v-icon icon="mdi-check"></v-icon>
         </v-btn>
       </v-form>

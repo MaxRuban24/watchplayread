@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app id="app" full-height>
     <v-main>
       <v-container fluid>
         <v-row>
@@ -8,6 +8,7 @@
               title="Books" 
               :items="categories.books" 
               has-author 
+              color="teal-lighten-1"
               @create="item => create(item, 'books')" 
               @update="item => update(item, 'books')" 
               @delete="item => del(item, 'books')"
@@ -18,6 +19,7 @@
               title="Movies" 
               :items="categories.movies" 
               has-author 
+              color="teal-lighten-1"
               @create="item => create(item, 'movies')" 
               @update="item => update(item, 'movies')"
               @delete="item => del(item, 'movies')"
@@ -27,9 +29,21 @@
             <List 
               title="Games" 
               :items="categories.games" 
+              color="teal-lighten-1"
               @create="item => create(item, 'games')" 
               @update="item => update(item, 'games')"
               @delete="item => del(item, 'games')"
+            />
+          </v-col>
+          <v-col :cols="3">
+            <List 
+              title="Music" 
+              :items="categories.music" 
+              has-author 
+              color="teal-lighten-1"
+              @create="item => create(item, 'music')" 
+              @update="item => update(item, 'music')"
+              @delete="item => del(item, 'music')"
             />
           </v-col>
         </v-row>
@@ -47,7 +61,8 @@ import { onMounted, reactive } from 'vue';
   const categories: Categories = reactive({
     books: [],
     movies: [],
-    games: []
+    games: [],
+    music: []
   })
 
   onMounted(() => {
@@ -89,3 +104,14 @@ import { onMounted, reactive } from 'vue';
   })
 
 </script>
+
+<style lang="scss">
+#app {
+  color: red;
+  background-image: url('assets/cool-background.jpeg');
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+</style>
