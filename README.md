@@ -1,6 +1,8 @@
 ## Watchplayread - a note taking web app
 
-##### *It helps to track your entertainment and personal development resources*
+### *It helps to track your entertainment and personal development resources*
+
+##
 
 #### Put your notes in four sections:
 
@@ -40,16 +42,16 @@ Containers.
 
 1. [Install Docker Engine](https://docs.docker.com/engine/install/ubuntu/)
 
-2. Run docker compose using dev file in root directory:
-    `$ docker compose -f docker-compose-dev.yml up --build -d`
+2. Run docker compose using dev file in root directory: 
+`$ docker compose -f docker-compose-dev.yml up --build -d`
 
 3. Check (http://localhost) in web browser
 
-###### ***Note***
+##### ***Note***
 
-To change on which local port to run web app -- modify ***ports*** first value under *server* section in *docker-compose-dev.yml* file 
+To change on which local port to run web app -- modify ***ports*** first value under ***server*** section in *docker-compose-dev.yml* file 
 
-###### Example
+##### Example
 
 ```
 version: "3.3"
