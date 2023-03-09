@@ -1,0 +1,35 @@
+version: "3.3"
+
+services: 
+  mongo:
+    image: mongo:4
+    restart: unless-stopped
+    ports:
+      - 27017:27017
+    container_name: mongo
+  
+  frontend:
+    image: wpracr1.azurecr.io/frontend:dev
+    build: 
+      context: ./frontend
+    command: yarn build
+    volumes:
+      - front:/app/dist
+    container_name: frontend
+
+  server:
+    image: wpracr1.azurecr.io/server:dev
+    build: 
+      context: ./server
+    env_file:
+      - .env
+    volumes:
+      - front:/app/public
+    depends_on:
+      - mongo
+    ports:
+      - 80:80
+    container_name: server
+
+volumes:
+  front:
